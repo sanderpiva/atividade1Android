@@ -1,5 +1,9 @@
 package br.edu.ifsuldeminas.mch.calc;
 
+
+//https://www.youtube.com/watch?v=jTuxCv_XjlA
+//Stack Mobile: Calculadora
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,16 +16,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import de.congrace.exp4j.Calculable;
 import de.congrace.exp4j.ExpressionBuilder;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-
-    private Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9,
-            virgula, soma, sub, mult, divisao, botao_limpar, btnDeletarCaracter, porcentagem;
-
+//implements View.OnClickListener
+public class MainActivity extends AppCompatActivity  {
+    private Button btnNum0, btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8, btnNum9,
+            btnVirgula, btnSoma, btnSubtracao, btnMultiplicacao, btnDivisao, btnPorcentagem;
     //
     private static final String TAG = "ifsuldeminas.mch.calc";
-    private Button buttonIgual;
+    private Button buttonIgual, buttonLimpar, buttonDeletarCaracter;
     private TextView textViewResultado;
     private TextView textViewUltimaExpressao;
 
@@ -30,25 +31,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inicio();
-        num0.setOnClickListener(this);
-        num1.setOnClickListener(this);
-        num2.setOnClickListener(this);
-        num3.setOnClickListener(this);
-        num4.setOnClickListener(this);
-        num5.setOnClickListener(this);
-        num6.setOnClickListener(this);
-        num7.setOnClickListener(this);
-        num8.setOnClickListener(this);
-        num9.setOnClickListener(this);
-        virgula.setOnClickListener(this);
-        soma.setOnClickListener(this);
-        sub.setOnClickListener(this);
-        mult.setOnClickListener(this);
-        divisao.setOnClickListener(this);
-        porcentagem.setOnClickListener(this);
+        recuperaIDcomponentesAtribuaNasVariaveis();
 
-        botao_limpar.setOnClickListener(new View.OnClickListener() {
+        btnNum0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                acrescentaExpressao("0", true);
+            }});
+
+        btnNum1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("1", true);}});
+
+        btnNum2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("2", true);}});
+
+        btnNum3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("3", true);}});
+
+        btnNum4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("4", true);}});
+
+        btnNum5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("5", true);}});
+
+        btnNum6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("6", true);}});
+
+        btnNum7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("7", true);}});
+
+        btnNum8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("8", true);}});
+
+        btnNum9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("9", true);}});
+
+        btnVirgula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao(".", true);}});
+
+        btnSoma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("+", false);}});
+
+        btnSubtracao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("-", false);}});
+
+        btnMultiplicacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("*", false);}});
+
+        btnDivisao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("/", false);}});
+
+        btnPorcentagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { acrescentaExpressao("%", false);}});
+
+        buttonLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 textViewUltimaExpressao.setText("");
@@ -56,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        btnDeletarCaracter.setOnClickListener(new View.OnClickListener() {
+        buttonDeletarCaracter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextView expressao = findViewById(R.id.textViewUltimaExpressaoID);
@@ -66,17 +117,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     int v1 = string.length()-1;
                     String txtexpressao = string.substring(v0, v1);
                     expressao.setText(txtexpressao);
-
                 }
                 textViewResultado.setText("");
             }
         });
 
-        //---
-        textViewResultado = findViewById(R.id.textViewResultadoID);
-        textViewUltimaExpressao = findViewById(R.id.textViewUltimaExpressaoID);
+        //--- Codigo fornecido
+        //textViewResultado = findViewById(R.id.textViewResultadoID);
+        //textViewUltimaExpressao = findViewById(R.id.textViewUltimaExpressaoID);
+        //buttonIgual = findViewById(R.id.buttonIgualID);
 
-        buttonIgual = findViewById(R.id.buttonIgualID);
         buttonIgual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,113 +146,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d(TAG, e.getMessage());
                     } else {
                        Log.d(TAG, "Erro ao tentar calculo da porcentagem.");
-                       
                     }
                 }
             }
         });
+        //Fim codigo fornecido
     }
+    private void recuperaIDcomponentesAtribuaNasVariaveis(){
 
-    private void inicio(){
-
-        num0 = findViewById(R.id.buttonZeroID);
-        num1 = findViewById(R.id.buttonUmID);
-        num2 = findViewById(R.id.buttonDoisID);
-        num3 = findViewById(R.id.buttonTresID);
-        num4 = findViewById(R.id.buttonQuatroID);
-        num5 = findViewById(R.id.buttonCincoID);
-        num6 = findViewById(R.id.buttonSeisID);
-        num7 = findViewById(R.id.buttonSeteID);
-        num8 = findViewById(R.id.buttonOitoID);
-        num9 = findViewById(R.id.buttonNoveID);
-        virgula = findViewById(R.id.buttonVirgulaID);
-        soma = findViewById(R.id.buttonSomaID);
-        sub = findViewById(R.id.buttonSubtracaoID);
-        mult = findViewById(R.id.buttonMultiplicacaoID);
-        divisao = findViewById(R.id.buttonDivisaoID);
-        porcentagem = findViewById(R.id.buttonPorcentoID);
+        btnNum0 = findViewById(R.id.buttonZeroID);
+        btnNum1 = findViewById(R.id.buttonUmID);
+        btnNum2 = findViewById(R.id.buttonDoisID);
+        btnNum3 = findViewById(R.id.buttonTresID);
+        btnNum4 = findViewById(R.id.buttonQuatroID);
+        btnNum5 = findViewById(R.id.buttonCincoID);
+        btnNum6 = findViewById(R.id.buttonSeisID);
+        btnNum7 = findViewById(R.id.buttonSeteID);
+        btnNum8 = findViewById(R.id.buttonOitoID);
+        btnNum9 = findViewById(R.id.buttonNoveID);
+        btnVirgula = findViewById(R.id.buttonVirgulaID);
+        btnSoma = findViewById(R.id.buttonSomaID);
+        btnSubtracao = findViewById(R.id.buttonSubtracaoID);
+        btnMultiplicacao = findViewById(R.id.buttonMultiplicacaoID);
+        btnDivisao = findViewById(R.id.buttonDivisaoID);
+        btnPorcentagem = findViewById(R.id.buttonPorcentoID);
         buttonIgual = findViewById(R.id.buttonIgualID);
-        botao_limpar = findViewById(R.id.buttonResetID);
+        buttonLimpar = findViewById(R.id.buttonResetID);
         textViewUltimaExpressao = findViewById(R.id.textViewUltimaExpressaoID);
         textViewResultado = findViewById(R.id.textViewResultadoID);
-        btnDeletarCaracter = findViewById(R.id.buttonDeleteID);
-
+        buttonDeletarCaracter = findViewById(R.id.buttonDeleteID);
+        buttonIgual = findViewById(R.id.buttonIgualID);
     }
-    //boolean aqui representa um estado
-    //fazemos validações
-    public void acrescenta(String string, boolean limpar_dados){
+    public void acrescentaExpressao(String string, boolean limpar_dados){
 
         if(textViewResultado.getText().equals("")){
             textViewUltimaExpressao.setText(" ");
         }
-
         if(limpar_dados){
             textViewResultado.setText(" ");
-            //acrescenta uma string para a expressao
             textViewUltimaExpressao.append(string);
         }
-        //limpar dados false:
         else{
             textViewUltimaExpressao.append(textViewResultado.getText());
             textViewUltimaExpressao.append(string);
             textViewResultado.setText(" ");
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId()){
-
-            case R.id.buttonZeroID:
-                acrescenta("0", true);
-                break;
-            case R.id.buttonUmID:
-                acrescenta("1", true);
-                break;
-            case R.id.buttonDoisID:
-                acrescenta("2", true);
-                break;
-            case R.id.buttonTresID:
-                acrescenta("3", true);
-                break;
-            case R.id.buttonQuatroID:
-                acrescenta("4", true);
-                break;
-            case R.id.buttonCincoID:
-                acrescenta("5", true);
-                break;
-            case R.id.buttonSeisID:
-                acrescenta("6", true);
-                break;
-            case R.id.buttonSeteID:
-                acrescenta("7", true);
-                break;
-            case R.id.buttonOitoID:
-                acrescenta("8", true);
-                break;
-            case R.id.buttonNoveID:
-                acrescenta("9", true);
-                break;
-            case R.id.buttonVirgulaID:
-                acrescenta(".", true);
-                break;
-            case R.id.buttonSomaID:
-                acrescenta("+", false);
-                break;
-            case R.id.buttonSubtracaoID:
-                acrescenta("-", false);
-                break;
-            case R.id.buttonMultiplicacaoID:
-                acrescenta("*", false);
-                break;
-            case R.id.buttonDivisaoID:
-                acrescenta("/", false);
-                break;
-
-            case R.id.buttonPorcentoID:
-                acrescenta("%", false);
-                break;
         }
     }
 }
