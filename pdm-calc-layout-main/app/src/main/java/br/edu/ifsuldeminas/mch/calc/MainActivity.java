@@ -1,6 +1,5 @@
 package br.edu.ifsuldeminas.mch.calc;
 
-
 //https://www.youtube.com/watch?v=jTuxCv_XjlA
 //Stack Mobile: Calculadora
 
@@ -11,8 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.Toast;
 
 import de.congrace.exp4j.Calculable;
 import de.congrace.exp4j.ExpressionBuilder;
@@ -31,102 +29,58 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recuperaIDcomponentesAtribuaNasVariaveis();
+        inicializacaoDosComponentes();
 
-        btnNum0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                acrescentaExpressao("0", true);
-            }});
+        btnNum0.setOnClickListener(view -> acrescentaExpressao("0", true));
 
-        btnNum1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("1", true);}});
+        btnNum1.setOnClickListener(view -> acrescentaExpressao("1", true));
 
-        btnNum2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("2", true);}});
+        btnNum2.setOnClickListener(view -> acrescentaExpressao("2", true));
 
-        btnNum3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("3", true);}});
+        btnNum3.setOnClickListener(view -> acrescentaExpressao("3", true));
 
-        btnNum4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("4", true);}});
+        btnNum4.setOnClickListener(view -> acrescentaExpressao("4", true));
 
-        btnNum5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("5", true);}});
+        btnNum5.setOnClickListener(view -> acrescentaExpressao("5", true));
 
-        btnNum6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("6", true);}});
+        btnNum6.setOnClickListener(view -> acrescentaExpressao("6", true));
 
-        btnNum7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("7", true);}});
+        btnNum7.setOnClickListener(view -> acrescentaExpressao("7", true));
 
-        btnNum8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("8", true);}});
+        btnNum8.setOnClickListener(view -> acrescentaExpressao("8", true));
 
-        btnNum9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("9", true);}});
+        btnNum9.setOnClickListener(view -> acrescentaExpressao("9", true));
 
-        btnVirgula.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao(".", true);}});
+        btnVirgula.setOnClickListener(view -> acrescentaExpressao(".", true));
 
-        btnSoma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("+", false);}});
+        btnSoma.setOnClickListener(view -> acrescentaExpressao("+", false));
 
-        btnSubtracao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("-", false);}});
+        btnSubtracao.setOnClickListener(view -> acrescentaExpressao("-", false));
 
-        btnMultiplicacao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("*", false);}});
+        btnMultiplicacao.setOnClickListener(view -> acrescentaExpressao("*", false));
 
-        btnDivisao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("/", false);}});
+        btnDivisao.setOnClickListener(view -> acrescentaExpressao("/", false));
 
-        btnPorcentagem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { acrescentaExpressao("%", false);}});
+        btnPorcentagem.setOnClickListener(view -> acrescentaExpressao("%", false));
 
-        buttonLimpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textViewUltimaExpressao.setText("");
-                textViewResultado.setText("");
-            }
+        buttonLimpar.setOnClickListener(view -> {
+            textViewUltimaExpressao.setText("");
+            textViewResultado.setText("");
         });
 
-        buttonDeletarCaracter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView expressao = findViewById(R.id.textViewUltimaExpressaoID);
-                String string = expressao.getText().toString();
-                if(!string.isEmpty()){
-                    byte v0 =0 ;
-                    int v1 = string.length()-1;
-                    String txtexpressao = string.substring(v0, v1);
-                    expressao.setText(txtexpressao);
-                }
-                textViewResultado.setText("");
+        buttonDeletarCaracter.setOnClickListener(view -> {
+            TextView expressao = findViewById(R.id.textViewUltimaExpressaoID);
+            String string = expressao.getText().toString();
+            if(!string.isEmpty()){
+                byte v0 =0 ;
+                int v1 = string.length()-1;
+                String txtexpressao = string.substring(v0, v1);
+                expressao.setText(txtexpressao);
             }
+            textViewResultado.setText("");
         });
 
         //--- Codigo fornecido
-        //textViewResultado = findViewById(R.id.textViewResultadoID);
-        //textViewUltimaExpressao = findViewById(R.id.textViewUltimaExpressaoID);
-        //buttonIgual = findViewById(R.id.buttonIgualID);
-
         buttonIgual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,18 +95,15 @@ public class MainActivity extends AppCompatActivity  {
                     textViewUltimaExpressao.setText(expressao);
                     textViewResultado.setText(resultado.toString());
                 } catch (Exception e) {
-                    //Log.d(TAG, e.getMessage());
-                    if (e.getMessage() != null) {
-                        Log.d(TAG, e.getMessage());
-                    } else {
-                       Log.d(TAG, "Erro ao tentar calculo da porcentagem.");
-                    }
+                    Log.d(TAG, "Error");
+                    Toast toast = Toast.makeText(view.getContext(), "Erro, aperte C", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
         //Fim codigo fornecido
     }
-    private void recuperaIDcomponentesAtribuaNasVariaveis(){
+    private void inicializacaoDosComponentes(){
 
         btnNum0 = findViewById(R.id.buttonZeroID);
         btnNum1 = findViewById(R.id.buttonUmID);
@@ -179,9 +130,10 @@ public class MainActivity extends AppCompatActivity  {
     }
     public void acrescentaExpressao(String string, boolean limpar_dados){
 
-        if(textViewResultado.getText().equals("")){
+        if(textViewResultado.getText().equals("") && !buttonDeletarCaracter.isClickable()){
             textViewUltimaExpressao.setText(" ");
         }
+
         if(limpar_dados){
             textViewResultado.setText(" ");
             textViewUltimaExpressao.append(string);
